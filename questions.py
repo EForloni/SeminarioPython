@@ -22,17 +22,16 @@ answers = [
 # Índice de la respuesta correcta para cada pregunta, el el mismo orden que las preguntas
 correct_answers_index = [1, 2, 0, 3, 1]
 
+questions_to_ask = random.sample(list(zip(questions, answers, correct_answers_index)), k=3)
+
 # El usuario deberá contestar 3 preguntas
 
 score = 0
 
-for _ in range(3):
-    # Se selecciona una pregunta aleatoria
-    question_index = random.randint(0, len(questions) - 1)
-    
+for question, answers, correct_index in questions_to_ask:
     # Se muestra la pregunta y las respuestas posibles
-    print(questions[question_index])
-    for i, answer in enumerate(answers[question_index]):
+    print(question)
+    for i, answer in enumerate(answers):
         print(f"{i + 1}. {answer}")
 
     # El usuario tiene 2 intentos para responder correctamente
@@ -48,12 +47,12 @@ for _ in range(3):
         user_answer = int(user_answer)-1
 
         # Verificamos si el número está dentro del rango válido
-        if user_answer < 0 or user_answer > len(answers[question_index]):
+        if user_answer < 0 or user_answer >= len(answers):
             print("Respuesta no válida")
             exit(1)
 
         # Se verifica si la respuesta es correcta
-        if user_answer == correct_answers_index[question_index]:
+        if user_answer == correct_index:
             print("¡Correcto!")
             score += 1
             break
@@ -62,6 +61,6 @@ for _ in range(3):
             # se muestra la respuesta correcta
         print("Incorrecto. La respuesta correcta es:")
         score -= 0.5
-        print(answers[question_index] [correct_answers_index[question_index]])
+        print(answers[correct_index])
     # Se imprime un blanco al final de la pregunta
 print(f"Su resultado es: {score}")
